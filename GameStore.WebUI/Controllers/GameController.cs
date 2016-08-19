@@ -21,14 +21,14 @@ namespace GameStore.WebUI.Controllers
         {
             ///EFDbContext dbContext = new EFDbContext(); //new Model1();
 
-            Model1 dbContext = new Model1();
-            var query = dbContext.Games;
+            //Model1 dbContext = new Model1();
+            //var query = dbContext.Games;
 
-            foreach (var game in query)
-            {
-                Console.WriteLine("Name = {0} , Price = {1}",
-                                  game.Name, game.Price);
-            }
+            //foreach (var game in query)
+            //{
+            //    Console.WriteLine("Name = {0} , Price = {1}",
+            //                      game.Name, game.Price);
+            //}
 
             //IEnumerable<Games> products = query.ToList();
 
