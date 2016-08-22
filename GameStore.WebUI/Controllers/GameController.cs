@@ -8,31 +8,36 @@ using GameStore.Domain.Entities;
 using GameStore.Domain;
 using GameStore.Domain.Concrete;
 
+using GameStore.WebUI.Models;
+
 namespace GameStore.WebUI.Controllers
 {
     public class GameController : Controller
     {
         private IGameRepository repository;
+        public int pageSize = 4;
+
         public GameController(IGameRepository repo)
         {
             repository = repo;
         }
-        public ViewResult List()
+
+        public ViewResult List(int page = 1)
         {
-            ///EFDbContext dbContext = new EFDbContext(); //new Model1();
-
-            //Model1 dbContext = new Model1();
-            //var query = dbContext.Games;
-
-            //foreach (var game in query)
-            //{
-            //    Console.WriteLine("Name = {0} , Price = {1}",
-            //                      game.Name, game.Price);
-            //}
-
-            //IEnumerable<Games> products = query.ToList();
-
-            return View(repository.Games);
+            GamesListViewModel model = new GamesListViewModel
+            {
+                Games = repository.Games
+                    .OrderBy(game => game.GameId)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = repository.Games.Count()
+                }
+            };
+            return View(model);
         }
     }
 }
