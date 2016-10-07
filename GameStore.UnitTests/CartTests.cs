@@ -116,5 +116,7 @@ namespace GameStore.UnitTests
             // Утверждение
             Assert.AreEqual(cart.Lines.Count(), 0);
         }
+
+
     }
 }
