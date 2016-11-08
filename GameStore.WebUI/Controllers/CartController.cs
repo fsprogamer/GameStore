@@ -16,10 +16,29 @@ namespace GameStore.WebUI.Controllers
             repository = repo;
             orderProcessor = processor;
         }
-
         public ViewResult Checkout()
         {
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -60,24 +79,6 @@ namespace GameStore.WebUI.Controllers
             return PartialView(cart);
         }
 
-        [HttpPost]
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
-        {
-            if (cart.Lines.Count() == 0)
-            {
-                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
-            }
 
-            if (ModelState.IsValid)
-            {
-                orderProcessor.ProcessOrder(cart, shippingDetails);
-                cart.Clear();
-                return View("Completed");
-            }
-            else
-            {
-                return View(shippingDetails);
-            }
-        }
     }
 }

@@ -217,7 +217,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object);
+            CartController controller = new CartController(mock.Object, null);
 
             // Действие - добавить игру в корзину
             controller.AddToCart(cart, 1, null);
@@ -243,7 +243,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object);
+            CartController controller = new CartController(mock.Object, null);
 
             // Действие - добавить игру в корзину
             RedirectToRouteResult result = controller.AddToCart(cart, 2, "myUrl");
@@ -261,7 +261,7 @@ namespace GameStore.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController target = new CartController(null);
+            CartController target = new CartController(null,null);
 
             // Действие - вызов метода действия Index()
             CartIndexViewModel result
